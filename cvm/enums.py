@@ -31,7 +31,7 @@ class CvmStatus(Enum):
 class CvmType(Enum):
     """
     For more details see [Angular Commits](https://gist.github.com/brianclements/841ea7bffdb01346392c).
-    """
+    """  # noqa: E501
     Feat = "feat"
     Refactor = "refactor"
     Fix = "fix"

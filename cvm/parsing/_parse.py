@@ -1,10 +1,13 @@
 import re
+
 from cvm.constants import CONDITION_MAX_LEN, STATUS_MAX_LEN
 from cvm.enums import CvmStatus, CvmType
 from cvm.errors import ReservedOperatorError
 from cvm.models import Cvm, CvmCondition, CvmModule, CvmProject
 from cvm.parsing._block import Block, TextByBlock
-from cvm.parsing.patterns import FUTURE_RESERVED_OPERATOR_PATTERNS, MAIN_PART_PATTERN, CONSECUTIVE_SPACES_PATTERN, TAG_PATTERN
+from cvm.parsing.patterns import (CONSECUTIVE_SPACES_PATTERN,
+                                  FUTURE_RESERVED_OPERATOR_PATTERNS,
+                                  MAIN_PART_PATTERN, TAG_PATTERN)
 from cvm.utils.string import replace
 
 

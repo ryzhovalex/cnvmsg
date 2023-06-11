@@ -13,7 +13,7 @@ def test_project_type():
     assert cvm.project_text == "ussr"
     assert cvm.type_text == "feat"
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -29,7 +29,7 @@ def test_project_type_module():
     assert cvm.project_text == "ussr"
     assert cvm.type_text == "feat"
     assert cvm.module_text == "factory"
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -45,7 +45,7 @@ def test_project_type_module_breaking():
     assert cvm.project_text == "ussr"
     assert cvm.type_text == "feat"
     assert cvm.module_text == "factory"
-    assert cvm.is_breaking == True
+    assert cvm.is_breaking is True
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -63,6 +63,6 @@ def test_composite():
     assert cvm.project_text == "ussr"
     assert cvm.type_text == "feat"
     assert cvm.module_text == "factory"
-    assert cvm.is_breaking == True
+    assert cvm.is_breaking is True
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags == ["community", "pyatiletka"]

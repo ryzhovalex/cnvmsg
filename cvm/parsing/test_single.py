@@ -1,4 +1,3 @@
-from pprint import pprint
 from cvm.models import Cvm
 from cvm.parsing._parse import parse
 
@@ -14,7 +13,7 @@ def test_condition():
     assert cvm.project is None
     assert cvm.type is None
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -30,7 +29,7 @@ def test_status():
     assert cvm.project is None
     assert cvm.type is None
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -46,7 +45,7 @@ def test_text():
     assert cvm.project is None
     assert cvm.type is None
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -62,7 +61,7 @@ def test_redundant_spaces_text():
     assert cvm.project is None
     assert cvm.type is None
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -78,7 +77,7 @@ def test_tags():
     assert cvm.project is None
     assert cvm.type is None
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags == ["community", "pyatiletka"]
 
@@ -94,7 +93,7 @@ def test_stranded_tags():
     assert cvm.project is None
     assert cvm.type is None
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     # the redundant spaces should be correctly trimmed
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags == ["forall", "community", "pyatiletka"]
@@ -111,7 +110,7 @@ def test_breaking():
     assert cvm.project is None
     assert cvm.type is None
     assert cvm.module is None
-    assert cvm.is_breaking == True
+    assert cvm.is_breaking is True
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -127,7 +126,7 @@ def test_module():
     assert cvm.project is None
     assert cvm.type is None
     assert cvm.module_text == "factory"
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -143,7 +142,7 @@ def test_type():
     assert cvm.project is None
     assert cvm.type_text == "feat"
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
 
@@ -159,6 +158,6 @@ def test_project():
     assert cvm.project_text == "ussr"
     assert cvm.type is None
     assert cvm.module is None
-    assert cvm.is_breaking == False
+    assert cvm.is_breaking is False
     assert cvm.text == "ability to call a comrad"
     assert cvm.tags is None
