@@ -1,6 +1,6 @@
 from pprint import pprint
 from cvm.models import Cvm
-from cvm.parse.parse import parse
+from cvm.parsing._parse import parse
 
 
 def test_condition():

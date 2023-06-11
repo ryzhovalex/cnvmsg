@@ -1,5 +1,5 @@
 # cvm
-Conventional Message handling
+Conventional Message handling.
 
 > ⚠️ WARNING: Poorly tested, error-prone. Works well only with perfectly matched strings.
 
