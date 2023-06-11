@@ -13,7 +13,15 @@ from cvm.utils.string import replace
 
 def parse(message: str) -> Cvm:
     """
-    Parses string into Conventional Message.
+    Parses a string into Conventional Message.
+
+    Args:
+        message:
+            String message to be parsed.
+
+    Returns:
+        Cvm:
+            Conventional Message object.
     """
 
     # TODO(ryzhovalex): How to improve this code:
