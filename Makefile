@@ -2,7 +2,7 @@ export show=all
 export extra=""
 
 test:
-	poetry run coverage run -m pytest -x -p no:warnings --show-capture=$(show) --failed-first $(extra) cvm
+	poetry run coverage run -m pytest -x -p no:warnings --show-capture=$(show) --failed-first $(extra) cnvmsg
 
 lint:
 	poetry run ruff .
@@ -21,7 +21,7 @@ changelog:
 	poetry run git-changelog -c conventional -o CHANGELOG.md .
 
 docs.serve:
-	poetry run mkdocs serve -a localhost:9000 -w cvm
+	poetry run mkdocs serve -a localhost:9000 -w cnvmsg
 
 docs.build:
 	poetry run mkdocs build

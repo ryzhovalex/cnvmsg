@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "cvm"
+name = "cnvmsg"
 version = "0.1.0"
 description = "Conventional Message handling"
 authors = ["ryzhovalex <thed4rkof@gmail.com>"]

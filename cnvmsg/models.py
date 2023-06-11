@@ -1,31 +1,31 @@
 from pydantic import BaseModel
 
-from cvm.enums import CvmStatus, CvmType
-from cvm.errors import MissingFieldError
+from cnvmsg.enums import MessageStatus, MessageType
+from cnvmsg.errors import MissingFieldError
 
 
-class CvmCondition(BaseModel):
+class MessageCondition(BaseModel):
     text: str
 
 
-class CvmProject(BaseModel):
+class MessageProject(BaseModel):
     name: str
 
 
-class CvmModule(BaseModel):
+class MessageModule(BaseModel):
     name: str
 
 
-class Cvm(BaseModel):
+class ConventionalMessage(BaseModel):
     """
     Main conventional message represenation model.
     """
     message: str
-    condition: CvmCondition | None = None
-    status: CvmStatus | None = None
-    project: CvmProject | None = None
-    type: CvmType | None = None
-    module: CvmModule | None = None
+    condition: MessageCondition | None = None
+    status: MessageStatus | None = None
+    project: MessageProject | None = None
+    type: MessageType | None = None
+    module: MessageModule | None = None
     is_breaking: bool = False
     text: str
     tags: list[str] | None = None

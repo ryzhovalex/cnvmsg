@@ -1,4 +1,4 @@
-::: cvm.parsing._parse
-::: cvm.models
-::: cvm.enums
-::: cvm.errors
+::: cnvmsg.parsing._parse
+::: cnvmsg.models
+::: cnvmsg.enums
+::: cnvmsg.errors

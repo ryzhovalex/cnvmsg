@@ -3,5 +3,8 @@ def test_import():
     Public API imports should be accessible by importing directly from the
     package.
     """
-    from cvm import (Cvm, CvmCondition, CvmModule,  # noqa: I001, F401
-                     CvmProject, CvmStatus, CvmType, parse)
+    from cnvmsg import (ConventionalMessage,  # noqa: I001, F401
+                        MessageCondition,
+                        MessageModule, MessageProject,
+                        MessageStatus, MessageType,
+                        parse)

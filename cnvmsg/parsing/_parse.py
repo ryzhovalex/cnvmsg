@@ -1,17 +1,18 @@
 import re
 
-from cvm.constants import CONDITION_MAX_LEN, STATUS_MAX_LEN
-from cvm.enums import CvmStatus, CvmType
-from cvm.errors import ReservedOperatorError
-from cvm.models import Cvm, CvmCondition, CvmModule, CvmProject
-from cvm.parsing._block import Block, TextByBlock
-from cvm.parsing.patterns import (CONSECUTIVE_SPACES_PATTERN,
-                                  FUTURE_RESERVED_OPERATOR_PATTERNS,
-                                  MAIN_PART_PATTERN, TAG_PATTERN)
-from cvm.utils.string import replace
+from cnvmsg.constants import CONDITION_MAX_LEN, STATUS_MAX_LEN
+from cnvmsg.enums import MessageStatus, MessageType
+from cnvmsg.errors import ReservedOperatorError
+from cnvmsg.models import (ConventionalMessage, MessageCondition,
+                           MessageModule, MessageProject)
+from cnvmsg.parsing._block import Block, TextByBlock
+from cnvmsg.parsing.patterns import (CONSECUTIVE_SPACES_PATTERN,
+                                     FUTURE_RESERVED_OPERATOR_PATTERNS,
+                                     MAIN_PART_PATTERN, TAG_PATTERN)
+from cnvmsg.utils.string import replace
 
 
-def parse(message: str) -> Cvm:
+def parse(message: str) -> ConventionalMessage:
     """
     Parses a string into Conventional Message.
 
@@ -20,7 +21,7 @@ def parse(message: str) -> Cvm:
             String message to be parsed.
 
     Returns:
-        Cvm:
+        ConventionalMessage:
             Conventional Message object.
     """
 
@@ -28,11 +29,11 @@ def parse(message: str) -> Cvm:
     # - instead of doing custom loops, write better regex (i don't know regex
     #   well enough for this)
 
-    condition: CvmCondition | None = None
-    status: CvmStatus | None = None
-    project: CvmProject | None = None
-    cvmtype: CvmType | None = None
-    module: CvmModule | None = None
+    condition: MessageCondition | None = None
+    status: MessageStatus | None = None
+    project: MessageProject | None = None
+    _type: MessageType | None = None
+    module: MessageModule | None = None
     is_breaking: bool = False
     text: str = ""
     tags: list[str] | None = None
@@ -74,7 +75,7 @@ def parse(message: str) -> Cvm:
                     )
                     # correct the index to the full message length
                     nexti += i + 1
-                    condition = CvmCondition(text=inter_message)
+                    condition = MessageCondition(text=inter_message)
                     completed.append(Block.Condition)
                     should_be_whitespace = True
             elif c == "[":
@@ -92,7 +93,7 @@ def parse(message: str) -> Cvm:
                     )
                     nexti += i + 1
                     try:
-                        status = CvmStatus(inter_message)
+                        status = MessageStatus(inter_message)
                     except ValueError as error:
                         raise ValueError(
                             f"unsupported status={inter_message}"
@@ -108,11 +109,11 @@ def parse(message: str) -> Cvm:
                 for k, v in text_by_block.items():
                     match k:
                         case Block.Project:
-                            project = CvmProject(name=v)
+                            project = MessageProject(name=v)
                         case Block.Type:
-                            cvmtype = CvmType(v)
+                            _type = MessageType(v)
                         case Block.Module:
-                            module = CvmModule(name=v)
+                            module = MessageModule(name=v)
                         case Block.Breaking:
                             is_breaking = v == "1"
                         case Block.Text:
@@ -124,12 +125,12 @@ def parse(message: str) -> Cvm:
 
                 break
 
-    return Cvm(
+    return ConventionalMessage(
         message=message,
         condition=condition,
         status=status,
         project=project,
-        type=cvmtype,
+        type=_type,
         module=module,
         is_breaking=is_breaking,
         text=text,
@@ -210,7 +211,7 @@ def _parse_main(
     if has_project and not has_type:
         candidate: str = result[Block.Project]
         try:
-            CvmType(candidate)
+            MessageType(candidate)
         except ValueError:
             # the Project block really has a custom-defined project, do nothing
             pass
