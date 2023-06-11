@@ -7,6 +7,7 @@ class Block(Enum):
     Project = "project"
     Type = "type"
     Module = "module"
+    Breaking = "breaking"
     Text = "text"
 
 

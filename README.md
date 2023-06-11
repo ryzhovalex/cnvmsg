@@ -1,6 +1,8 @@
 # cvm
 Conventional Message handling
 
+> ⚠️ WARNING: Poorly tested, error-prone. Works well only with perfectly matched strings.
+
 ## What is Conventional Message?
 A specification for domain-agnostic message which helps in better describing of the context:
 ```

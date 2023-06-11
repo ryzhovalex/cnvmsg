@@ -1,9 +1,10 @@
 import re
 from cvm.constants import CONDITION_MAX_LEN, STATUS_MAX_LEN
 from cvm.enums import CvmStatus, CvmType
+from cvm.errors import ReservedOperatorError
 from cvm.models import Cvm, CvmCondition, CvmModule, CvmProject
 from cvm.parse._block import Block, TextByBlock
-from cvm.parse.patterns import MAIN_PART_PATTERN
+from cvm.parse.patterns import FUTURE_RESERVED_OPERATOR_PATTERNS, MAIN_PART_PATTERN, CONSECUTIVE_SPACES_PATTERN, TAG_PATTERN
 from cvm.utils.string import replace
 
 
@@ -11,6 +12,11 @@ def parse(message: str) -> Cvm:
     """
     Parses string into Conventional Message.
     """
+
+    # TODO(ryzhovalex): How to improve this code:
+    # - instead of doing custom loops, write better regex (i don't know regex
+    #   well enough for this)
+
     condition: CvmCondition | None = None
     status: CvmStatus | None = None
     project: CvmProject | None = None
@@ -96,9 +102,10 @@ def parse(message: str) -> Cvm:
                             cvmtype = CvmType(v)
                         case Block.Module:
                             module = CvmModule(name=v)
+                        case Block.Breaking:
+                            is_breaking = v == "1"
                         case Block.Text:
-                            # TODO: parse text further down
-                            text = v
+                            text, tags = _parse_tags(v)
                         case _:
                             raise ValueError(
                                 f"unsupported block={k} of main part"
@@ -180,7 +187,11 @@ def _parse_main(
                     case 4:
                         result[Block.Module] = replace(g, "(", ")")
                     case 5:
-                        result[Block.Text] = g.strip()
+                        result[Block.Breaking] = "1"
+                    case 6:
+                        text: str = g.strip()
+                        _check_reserved_operators(text)
+                        result[Block.Text] = text
 
     # in the message like `feat: mytext`, the `feat` will be
     # assigned to Project block, so here we check if we can re-assign it to
@@ -197,3 +208,28 @@ def _parse_main(
             del result[Block.Project]
 
     return result
+
+
+def _parse_tags(text: str) -> tuple[str, list[str] | None]:
+    """
+    Parses text for tags and returns cleared of tags text and list of tags
+    (or None if no tags are found).
+    """
+    tags: list[str] | None = re.findall(TAG_PATTERN, text) or None
+
+    if tags is not None:
+        for i, tag in enumerate(tags):
+            text = text.replace(tag, "")
+            tags[i] = tag.replace("#", "")
+
+    # remove consecutive spaces, also helps to remove two spaces left after
+    # the tag cutting
+    text = re.sub(CONSECUTIVE_SPACES_PATTERN, " ", text)
+
+    return text.strip(), tags
+
+
+def _check_reserved_operators(text: str) -> None:
+    for pattern in FUTURE_RESERVED_OPERATOR_PATTERNS:
+        if len(re.findall(pattern, text)) > 0:
+            raise ReservedOperatorError(operator=pattern)
