@@ -1,4 +1,6 @@
-from cvm.parse import parse
+from pprint import pprint
+from cvm.models import Cvm
+from cvm.parse.parse import parse
 
 
 def test_main():
@@ -6,6 +8,8 @@ def test_main():
         r"%after completing #1% [waiting] ussr/feat: ability to call a" \
         r" comrad #community #pyatiletka"
 
-    parse(inp)
+    cvm: Cvm = parse(inp)
+    print()
+    pprint(cvm.dict())
 
     assert 0, "OK"

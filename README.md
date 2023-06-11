@@ -12,7 +12,7 @@ Inspired by [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0
 ## Conventional Message Examples
 Full:
 ```
-% after closing #8b78 % [maybe] orwynn/refactor(bootscript): Rearrange bootscript structure #awaiting #nextrelease
+%after closing #8b78% [maybe] orwynn/refactor(bootscript): Rearrange bootscript structure #awaiting #nextrelease
 ```
 
 General feature:

@@ -1,7 +1,8 @@
-export PYTEST_SHOW=all
+export show=all
+export extra=""
 
 test:
-	poetry run coverage run -m pytest -x -p no:warnings --show-capture=$(PYTEST_SHOW) --failed-first cvm
+	poetry run coverage run -m pytest -x -p no:warnings --show-capture=$(show) --failed-first $(extra) cvm
 
 lint:
 	poetry run ruff .
